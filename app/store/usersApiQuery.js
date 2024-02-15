@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+let token = localStorage.getItem("accessToken");
 export const usersApi = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
@@ -13,7 +14,16 @@ export const usersApi = createApi({
         body: student,
       }),
     }),
+    getCourseList: builder.query({
+      query: () => ({
+        url: "/user/courses/",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useSetStudentMutation } = usersApi;
+export const { useSetStudentMutation, useGetCourseListQuery } = usersApi;
