@@ -14,6 +14,13 @@ export const usersApi = createApi({
         body: student,
       }),
     }),
+    login: builder.mutation({
+      query: user => ({
+        url: "/user/login/",
+        method: "POST",
+        body: user,
+      }),
+    }),
     getCourseList: builder.query({
       query: () => ({
         url: "/user/courses/",
@@ -23,7 +30,31 @@ export const usersApi = createApi({
         },
       }),
     }),
+    getStdCourseList: builder.query({
+      query: id => ({
+        url: `/user/student-course/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+    getStdInfo: builder.query({
+      query: id => ({
+        url: `/user/student/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useSetStudentMutation, useGetCourseListQuery } = usersApi;
+export const {
+  useSetStudentMutation,
+  useGetCourseListQuery,
+  useLoginMutation,
+  useGetStdCourseListQuery,
+  useGetStdInfoQuery,
+} = usersApi;
