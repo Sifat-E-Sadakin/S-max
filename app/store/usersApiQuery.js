@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-let token = localStorage.getItem("accessToken");
+// let token = localStorage.getItem("accessToken");
 export const usersApi = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
@@ -22,7 +22,7 @@ export const usersApi = createApi({
       }),
     }),
     getCourseList: builder.query({
-      query: () => ({
+      query: token => ({
         url: "/user/courses/",
         method: "GET",
         headers: {
@@ -31,7 +31,7 @@ export const usersApi = createApi({
       }),
     }),
     getStdCourseList: builder.query({
-      query: id => ({
+      query: ({ id, token }) => ({
         url: `/user/student-course/${id}`,
         method: "GET",
         headers: {
@@ -40,12 +40,40 @@ export const usersApi = createApi({
       }),
     }),
     getStdInfo: builder.query({
-      query: id => ({
+      query: ({ id, token }) => ({
         url: `/user/student/${id}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
+      }),
+    }),
+    getAllTeachers: builder.query({
+      query: token => ({
+        url: "/user/teachers/",
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      }),
+    }),
+    getAllCategory: builder.query({
+      query: token => ({
+        url: "/user/categories/",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+    setNewCategory: builder.mutation({
+      query: ({ data, token }) => ({
+        url: "/user/categories/",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: data,
       }),
     }),
   }),
@@ -57,4 +85,7 @@ export const {
   useLoginMutation,
   useGetStdCourseListQuery,
   useGetStdInfoQuery,
+  useGetAllTeachersQuery,
+  useGetAllCategoryQuery,
+  useSetNewCategoryMutation,
 } = usersApi;

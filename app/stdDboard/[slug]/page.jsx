@@ -10,14 +10,14 @@ import React, { useEffect, useState } from "react";
 const page = () => {
   let [showCourse, setShowCourse] = useState([]);
   let stdId = useParams();
-  console.log(stdId.slug);
-  let { data: stdInfo } = useGetStdInfoQuery(stdId.slug);
-  let { data: allCourses } = useGetCourseListQuery();
+  let token = localStorage.getItem("accessToken");
+  let { data: stdInfo } = useGetStdInfoQuery({ id: stdId.slug, token: token });
+  let { data: allCourses } = useGetCourseListQuery(token);
   // let { data: myCourses } = useGetStdCourseListQuery(stdId.slug);
 
   useEffect(() => {
     setShowCourse(allCourses);
-  });
+  }, [allCourses]);
 
   return (
     <div className="drawer lg:drawer-open">
@@ -41,7 +41,7 @@ const page = () => {
               {/* row 1 */}
               {showCourse &&
                 showCourse.map((course, index) => (
-                  <tr>
+                  <tr key={index}>
                     <th>{index + 1}</th>
                     <td>{course.title}</td>
                     <td>{course.id}</td>
