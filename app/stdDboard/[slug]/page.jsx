@@ -4,7 +4,7 @@ import {
   useGetStdCourseListQuery,
   useGetStdInfoQuery,
 } from "@/app/store/usersApiQuery";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
@@ -15,6 +15,7 @@ const page = () => {
   let { data: allCourses } = useGetCourseListQuery(token);
   // let { data: myCourses } = useGetStdCourseListQuery(stdId.slug);
 
+  const router = useRouter();
   useEffect(() => {
     setShowCourse(allCourses);
   }, [allCourses]);

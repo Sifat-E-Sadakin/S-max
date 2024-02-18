@@ -76,6 +76,38 @@ export const usersApi = createApi({
         body: data,
       }),
     }),
+    setNewTeacher: builder.mutation({
+      query: data => ({
+        url: "/user/teachers/",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getTeachersCourse: builder.query({
+      query: ({ id, token }) => ({
+        url: `/user/teacher/${id}/courses/`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+    getTeacherInfo: builder.query({
+      query: id => ({
+        url: `/user/teacher/${id}`,
+        method: "GET",
+      }),
+    }),
+    setCourse: builder.mutation({
+      query: ({ data, token }) => ({
+        url: "/user/courses/",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -88,4 +120,8 @@ export const {
   useGetAllTeachersQuery,
   useGetAllCategoryQuery,
   useSetNewCategoryMutation,
+  useSetNewTeacherMutation,
+  useGetTeachersCourseQuery,
+  useGetTeacherInfoQuery,
+  useSetCourseMutation,
 } = usersApi;

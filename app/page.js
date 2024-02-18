@@ -1,10 +1,15 @@
 "use client";
 import Image from "next/image";
+import Banner from "./components/block/Banner";
+import Timer from "./components/block/Timer";
+import Idea from "./components/block/Idea";
 
 export default function Home() {
   return (
     <main>
-      <h2>HOME PAGE</h2>
+      <Banner />
+      <Timer />
+      {/* <Idea /> */}
     </main>
   );
 }

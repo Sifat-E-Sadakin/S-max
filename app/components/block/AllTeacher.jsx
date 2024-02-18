@@ -8,6 +8,7 @@ const AllTeacher = () => {
   useEffect(() => {
     setTeacherList(allTeacher);
   });
+  console.log(teacherList);
   return (
     <div>
       <h1 className="text-center my-10 text-4xl font-semibold">

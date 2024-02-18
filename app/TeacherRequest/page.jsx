@@ -1,86 +1,91 @@
 "use client";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useLoginMutation } from "../store/usersApiQuery";
-import { useRouter } from "next/navigation";
+import { useSetNewTeacherMutation } from "../store/usersApiQuery";
 
 const page = () => {
-  const [loginPost, { data: user, isSuccess, isError }] = useLoginMutation();
-
-  const router = useRouter();
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm();
 
+  const [setNewTeacher, { data: teacherInfo, isError, isSuccess }] =
+    useSetNewTeacherMutation();
   const onSubmit = data => {
-    loginPost(data);
+    console.log(data);
+    setNewTeacher(data);
   };
   if (isSuccess) {
     console.log("success");
-    console.log(user);
-    localStorage.setItem("accessToken", user.token.access);
-    localStorage.setItem("refreshToken", user.token.refresh);
-    if (user.user.role === "admin") {
-      router.push(`/adminDboard/${user.user.id}`);
-    }
-    if (user.user.role === "teacher") {
-      router.push(`/teacherDboard/${user.user.id}`);
-    }
-    if (user.user.role === "student") {
-      router.push(`/stdDboard/${user.user.id}`);
-    }
+    console.log(teacherInfo);
+
+    alert("Teacher request submitted successfully");
   }
   if (isError) {
     console.log("error");
-    console.log(user);
+    console.log(teacherInfo);
+    alert("Teacher request submission failed");
   }
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
+          <h1 className="text-5xl font-bold">Join now!</h1>
           <p className="py-6">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
             {/* <button className="btn" onClick={() => testSubmit()}>
-          test
-        </button> */}
+            test
+          </button> */}
           </p>
         </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Mobile Number</span>
+                <span className="label-text">Full Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Sifat E Sadakin"
+                className="input input-bordered"
+                required
+                {...register("fullName", { required: true })}
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                placeholder="sifatesadakin10@gmail.com"
+                className="input input-bordered"
+                required
+                {...register("email", { required: true })}
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Mobile number</span>
               </label>
               <input
                 type="number"
                 placeholder="017XXXXXXXX"
                 className="input input-bordered"
                 required
-                {...register("mobile_number", { required: true })}
-              />
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                placeholder="password"
-                className="input input-bordered"
-                required
-                {...register("password", { required: true })}
+                {...register("phone_number", { required: true })}
               />
             </div>
 
             <div className="form-control mt-6">
               <button type="submit" className="btn btn-primary">
-                Login
+                Register
               </button>
             </div>
           </form>
