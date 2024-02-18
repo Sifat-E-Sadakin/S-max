@@ -35,6 +35,7 @@ const page = () => {
   if (isError) {
     console.log("error");
     console.log(user);
+    alert("Invalid Credentials");
   }
   return (
     <div className="hero min-h-screen bg-base-200">

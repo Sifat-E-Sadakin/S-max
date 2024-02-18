@@ -32,6 +32,7 @@ const page = () => {
   if (isError) {
     console.log("error");
     console.log(student);
+    alert("Invalid Credentials");
   }
   // console.log(data);
   const testSubmit = () => {
